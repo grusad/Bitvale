@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://src/objects/weapons/Bow.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/objects/projectiles/RegularArrow.tscn" type="PackedScene" id=2]
+[ext_resource path="res://res/textures/weopens_projectiles.png" type="Texture" id=3]
+
+[node name="SuperDuperBow" instance=ExtResource( 1 )]
+knockback_force = 50.0
+piercing = 2.0
+projectile_scene = ExtResource( 2 )
+projectile_speed = 70.0
+draw_speed = 0.1
+reload_speed = 0.1
+
+[node name="Pivot" parent="." index="1"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0.245965 )
+
+[node name="Sprite3D" parent="Pivot" index="0"]
+modulate = Color( 0.415686, 0.717647, 0.447059, 1 )
+pixel_size = 0.03
+texture = ExtResource( 3 )
+hframes = 4
+region_enabled = true
+region_rect = Rect2( 0, 0, 128, 32 )
+
+[node name="ArrowPivot" parent="Pivot" index="1"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.138592, 0, -6.05806e-09 )

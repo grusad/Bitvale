@@ -1,0 +1,156 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://src/objects/weapons/Bow.gd" type="Script" id=1]
+[ext_resource path="res://res/materials/default_no_y_billboard.material" type="Material" id=2]
+[ext_resource path="res://src/objects/weapons/Aim.gd" type="Script" id=3]
+[ext_resource path="res://res/textures/crosshair.png" type="Texture" id=4]
+
+[sub_resource type="Animation" id=1]
+resource_name = "draw"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Pivot/Sprite3D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5, 0.75 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Pivot/ArrowPivot:translation")
+tracks/1/interp = 0
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5, 0.75 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -0.129876, 0.0218327, -5.67705e-09 ), Vector3( -0.209054, 0.0218327, -9.138e-09 ), Vector3( -0.29463, 0.0218327, -1.28787e-08 ), Vector3( -0.318421, 0.0218327, -1.39186e-08 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+tracks/0/type = "value"
+tracks/0/path = NodePath("Pivot/Sprite3D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Pivot/ArrowPivot:translation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -0.129876, 0.0218327, -5.67705e-09 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+tracks/0/type = "value"
+tracks/0/path = NodePath("Pivot:translation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, -0.0218327, 0.229622 ), Vector3( 0, -0.372303, 0.229622 ), Vector3( 0, -0.0218327, 0.229622 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "add_projectile"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Pivot:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 90, 0 ), Vector3( 1.0056e-06, 90, -23.6732 ), Vector3( 0, 90, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Pivot/Sprite3D:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Pivot/ArrowPivot:translation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -0.129876, 0.0218327, -5.67705e-09 ) ]
+}
+
+[node name="Bow" type="Area"]
+collision_layer = 24
+collision_mask = 0
+script = ExtResource( 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/draw = SubResource( 1 )
+anims/idle = SubResource( 2 )
+anims/reload = SubResource( 3 )
+
+[node name="Pivot" type="Spatial" parent="."]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0 )
+
+[node name="Sprite3D" type="Sprite3D" parent="Pivot"]
+material_override = ExtResource( 2 )
+
+[node name="ArrowPivot" type="Position3D" parent="Pivot"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0 )
+
+[node name="Aim" type="RayCast" parent="Pivot/ArrowPivot"]
+enabled = true
+cast_to = Vector3( 0, 0, -200 )
+collision_mask = 13
+script = ExtResource( 3 )
+
+[node name="Crosshair" type="Sprite3D" parent="Pivot/ArrowPivot/Aim"]
+visible = false
+pixel_size = 0.05
+texture = ExtResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]

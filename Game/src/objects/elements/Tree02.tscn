@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://res/materials/default_y_billboard.material" type="Material" id=1]
+[ext_resource path="res://res/textures/elements.png" type="Texture" id=2]
+
+[node name="Tree02" type="Spatial"]
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.61073, 0 )
+material_override = ExtResource( 1 )
+pixel_size = 0.1
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 16, 0, 32, 32 )
