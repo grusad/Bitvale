@@ -42,4 +42,14 @@ func shake_bow(amount):
 func on_animation_finished(name):
 	if name == "reload":
 		emit_signal("loaded")
+		
+func get_stats():
+	var stats = {
+		"name" : self.name,
+		"damage" : damage,
+		"draw_speed" : draw_speed,
+		"reload_speed" : reload_speed,
+		"piercing" : piercing
+	}
+	return stats
 	

@@ -1,11 +1,14 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://src/Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://src/Player/Stats.gd" type="Script" id=2]
 [ext_resource path="res://src/Player/Camera.gd" type="Script" id=3]
 [ext_resource path="res://src/Player/Hand.gd" type="Script" id=4]
 [ext_resource path="res://src/Player/HudManager.gd" type="Script" id=5]
-[ext_resource path="res://src/hud/Inventory.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/hud/Stats.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/hud/GameMenu.tscn" type="PackedScene" id=7]
+[ext_resource path="res://res/audio/HudOpen.wav" type="AudioStream" id=8]
+[ext_resource path="res://res/audio/HudClose.wav" type="AudioStream" id=9]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.5
@@ -186,3 +189,12 @@ script = ExtResource( 5 )
 
 [node name="Inventory" parent="HudManager" instance=ExtResource( 6 )]
 visible = false
+
+[node name="GameMenu" parent="HudManager" instance=ExtResource( 7 )]
+visible = false
+
+[node name="OpenAudio" type="AudioStreamPlayer" parent="HudManager"]
+stream = ExtResource( 8 )
+
+[node name="CloseAudio" type="AudioStreamPlayer" parent="HudManager"]
+stream = ExtResource( 9 )

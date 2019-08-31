@@ -1,7 +1,15 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/rooms/BaseRoom.gd" type="Script" id=1]
 [ext_resource path="res://res/tiles/tiles.meshlib" type="MeshLibrary" id=2]
+
+[sub_resource type="ProceduralSky" id=1]
+ground_bottom_color = Color( 0.839216, 0.917647, 0.980392, 1 )
+ground_horizon_color = Color( 0.839216, 0.917647, 0.980392, 1 )
+
+[sub_resource type="Environment" id=2]
+background_mode = 2
+background_sky = SubResource( 1 )
 
 [node name="BaseRoom" type="Spatial"]
 script = ExtResource( 1 )
@@ -10,6 +18,7 @@ script = ExtResource( 1 )
 transform = Transform( 1, 0, 0, 0, 0.819152, 0.573576, 0, -0.573576, 0.819152, 0, 6, 0 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 2 )
 
 [node name="Navigation" type="Navigation" parent="."]
 

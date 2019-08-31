@@ -3,6 +3,7 @@ extends "res://src/mobs/Mob.gd"
 export (float) var cooldown = 1.0
 export (int) var hp = 10
 export (int) var simple_attack_dmg = 1.0
+export (int) var experience = 0
 
 onready var vision_area = $Vision
 onready var combat_range = $CombatRange
@@ -10,6 +11,7 @@ onready var shape = $CollisionShape
 onready var hit_animation = $HitAnimationPlayer
 onready var particles = $Particles
 onready var die_timer = $Particles/Timer
+onready var exp_globe = preload("res://src/objects/misc/ExpGlobe.tscn")
 
 var target = null
 var path_timer = null
@@ -109,16 +111,16 @@ func on_cooldown_timer_timeout():
 func simple_attack(target):
 	print(name , " needs to override the simple attack function.")
 	
-func hit(damage, knockback_force, executer_translation):
+func hit(damage, knockback_force, hit_from, executer):
 	if not has_unique_material:
 		sprite.material_override = clone_current_material()
 		has_unique_material = true
 		
 	flash()
 	hp -= damage
-	apply_knockback(executer_translation, knockback_force)
+	apply_knockback(hit_from, knockback_force)
 	if hp <= 0:
-		die()
+		die(executer)
 		
 func apply_knockback(from, force):
 	var knockback_dir = -(from - get_global_transform().origin)
@@ -130,7 +132,7 @@ func flash():
 	hit_animation.play("flash")
 
 		
-func die():
+func die(executer):
 	particles.emitting = true
 	die_timer.wait_time = particles.lifetime
 	die_timer.connect("timeout", self, "on_enemy_dies")
@@ -138,6 +140,12 @@ func die():
 	sprite.visible = false
 	shape.disabled = true
 	is_dying = true
-	
+	#emitting exp
+	for i in experience:
+		var exp_instance = exp_globe.instance()
+		Globals.temp_root.add_child(exp_instance)
+		exp_instance.global_transform.origin = self.global_transform.origin
+		exp_instance.start(executer)
+		
 func on_enemy_dies():
 	queue_free()

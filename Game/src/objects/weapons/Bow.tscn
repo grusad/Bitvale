@@ -138,6 +138,7 @@ transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0
 
 [node name="Sprite3D" type="Sprite3D" parent="Pivot"]
 material_override = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 128, 32 )
 
 [node name="ArrowPivot" type="Position3D" parent="Pivot"]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0 )

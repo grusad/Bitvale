@@ -8,4 +8,9 @@ script = ExtResource( 1 )
 
 [node name="Room" type="Spatial" parent="."]
 
-[node name="Player" parent="." instance=ExtResource( 2 )]
+[node name="PlayerContainer" type="Spatial" parent="."]
+editor/display_folded = true
+
+[node name="Player" parent="PlayerContainer" instance=ExtResource( 2 )]
+
+[node name="Temp" type="Spatial" parent="."]

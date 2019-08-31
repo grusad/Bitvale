@@ -14,6 +14,7 @@ var current_piercing = 0
 
 var dir = Vector3()
 var launched_from_translation = Vector3()
+var executer = null
 
 func _ready():
 	set_process(false)
@@ -21,13 +22,14 @@ func _ready():
 	timer.connect("timeout", self, "on_timer_timeout")
 	collision_shape.disabled = true
 
-func start(damage, knockback_force, piercing, projectile_speed):
+func start(damage, knockback_force, piercing, projectile_speed, executer):
 	self.damage = damage
 	self.knockback_force = knockback_force
 	self.piercing = piercing
 	self.projectile_speed = projectile_speed
 	self.dir = -global_transform.basis.z.normalized()
 	self.launched_from_translation = get_global_transform().origin
+	self.executer = executer
 	particles.emitting = true
 	collision_shape.disabled = false
 	timer.start()
@@ -38,7 +40,7 @@ func _process(delta):
 	
 func on_body_entered(body):
 	if body.is_in_group("Enemy"):
-		body.hit(damage, knockback_force, launched_from_translation)
+		body.hit(damage, knockback_force, launched_from_translation, executer)
 		current_piercing += 1
 		if current_piercing >= piercing:
 			hide_and_disable()

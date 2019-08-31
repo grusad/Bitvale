@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/hud/GameMenu.gd" type="Script" id=1]
+
+[node name="GameMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="CenterContainer" type="CenterContainer" parent="PanelContainer"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 1276.0
+margin_bottom = 716.0
+
+[node name="Buttons" type="VBoxContainer" parent="PanelContainer/CenterContainer"]
+margin_left = 623.0
+margin_top = 340.0
+margin_right = 648.0
+margin_bottom = 372.0
+
+[node name="Save" type="Button" parent="PanelContainer/CenterContainer/Buttons"]
+margin_right = 25.0
+margin_bottom = 14.0
+text = "Save"
+
+[node name="Load" type="Button" parent="PanelContainer/CenterContainer/Buttons"]
+margin_top = 18.0
+margin_right = 25.0
+margin_bottom = 32.0
+text = "Load"

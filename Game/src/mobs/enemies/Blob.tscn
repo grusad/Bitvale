@@ -61,6 +61,7 @@ tracks/0/keys = {
 script = ExtResource( 2 )
 speed = 2.0
 cooldown = 2.0
+experience = 10
 
 [node name="CollisionShape" parent="." index="0"]
 transform = Transform( 0.57143, 0, 0, 0, 0.57143, 0, 0, 0, 0.57143, 0, 0.5, 0 )

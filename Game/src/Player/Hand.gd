@@ -2,20 +2,17 @@ extends Spatial
 
 var is_drawing = false
 var projectile_instance = null
-var scene_root = null
 var is_loaded = false
 var draw_timer = null
 var current_weopen = null
 var percent_drawn = 0
-
+var player = null
 
 func _ready():
 	draw_timer = Timer.new()
 	draw_timer.connect("timeout", self, "on_draw_timer_timerout")
 	draw_timer.one_shot = true
 	add_child(draw_timer)
-	
-	scene_root = get_tree().root.get_children()[2]
 	equip(load("res://src/objects/weapons/WoodenBow.tscn").instance())
 	
 func _process(delta):
@@ -25,7 +22,7 @@ func _process(delta):
 		percent_drawn = 0
 	
 	if current_weopen != null:	
-		current_weopen.shake_bow(percent_drawn * 0.005)
+		current_weopen.shake_bow(percent_drawn * 0.0025)
 
 func draw():
 	
@@ -41,9 +38,9 @@ func draw():
 func release():
 	var percent_to_power = percent_drawn * 0.01
 	var projectile_instance = current_weopen.loaded_projectile
-	projectile_instance.start(current_weopen.damage * percent_to_power, current_weopen.knockback_force * percent_to_power, current_weopen.piercing, current_weopen.projectile_speed * percent_to_power)
+	projectile_instance.start(current_weopen.damage * percent_to_power, current_weopen.knockback_force * percent_to_power, current_weopen.piercing, current_weopen.projectile_speed * percent_to_power, player)
 	current_weopen.arrow_pivot.remove_child(projectile_instance)
-	scene_root.add_child(projectile_instance)
+	Globals.temp_root.add_child(projectile_instance)
 	projectile_instance.global_transform = current_weopen.arrow_pivot.global_transform
 	projectile_instance.global_transform.basis.z.y = 0
 	is_loaded = false
@@ -80,3 +77,6 @@ func on_bow_loaded():
 	is_loaded = true
 	current_weopen.anim_player.play("idle")
 	current_weopen.crosshair.visible = true
+	
+func set_player(player):
+	self.player = player

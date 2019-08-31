@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/objects/weapons/Bow.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/objects/projectiles/RegularArrow.tscn" type="PackedScene" id=2]
-[ext_resource path="res://icon.png" type="Texture" id=3]
-[ext_resource path="res://res/textures/weopens_projectiles.png" type="Texture" id=4]
+[ext_resource path="res://res/textures/weopens_projectiles.png" type="Texture" id=3]
 
 [sub_resource type="SpatialMaterial" id=1]
 flags_transparent = true
@@ -14,23 +13,19 @@ extents = Vector3( 0.3, 0.3, 0.3 )
 [node name="WoodenBow" instance=ExtResource( 1 )]
 damage = 100.0
 knockback_force = 20.0
+piercing = 4.0
 projectile_scene = ExtResource( 2 )
 projectile_speed = 50.0
 
-[node name="ObjectMetaData" parent="." index="0"]
-path = "res://src/objects/weapons/WoodenBow.tscn"
-icon = ExtResource( 3 )
-
-[node name="Pivot" parent="." index="2"]
+[node name="Pivot" parent="." index="1"]
 transform = Transform( -4.37113e-08, 0, 1, 0, 1, 0, -0.999999, 0, -4.37114e-08, 0, -0.0218327, 0.229622 )
 
 [node name="Sprite3D" parent="Pivot" index="0"]
 transform = Transform( 0.955946, -0.00198201, 0.000256971, -0.00198199, 0.999911, 1.15469e-05, 0.000256968, 1.16513e-05, 0.999999, 0, 0, 0 )
 pixel_size = 0.03
-texture = ExtResource( 4 )
+texture = ExtResource( 3 )
 hframes = 4
 region_enabled = true
-region_rect = Rect2( 0, 0, 128, 32 )
 
 [node name="ArrowPivot" parent="Pivot" index="1"]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.129876, 0.0218327, -5.67705e-09 )
@@ -38,6 +33,6 @@ transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.1298
 [node name="Crosshair" parent="Pivot/ArrowPivot/Aim" index="0"]
 material_override = SubResource( 1 )
 
-[node name="CollisionShape" parent="." index="3"]
+[node name="CollisionShape" parent="." index="2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.19973 )
 shape = SubResource( 2 )

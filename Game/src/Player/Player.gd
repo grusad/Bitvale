@@ -5,10 +5,9 @@ onready var stats = $Stats
 onready var camera = $RotationPivot/Camera
 onready var anim_tree = $AnimationTree
 onready var inventory = $HudManager/Inventory
+onready var rotation_pivot = $RotationPivot
 
-const GRAVITY = -24.8
 var vel = Vector3()
-const MAX_SPEED = 10
 const ACCEL = 4.5
 const DEACCEL= 16
 const TURN_SPEED = 2.5
@@ -17,6 +16,9 @@ var dir = Vector3()
 
 func _ready():
 	add_to_group("Player")
+	add_to_group("Save")
+	inventory.set_player(self)
+	hand.set_player(self)
 	
 
 func _physics_process(delta):
@@ -43,8 +45,6 @@ func process_input(delta):
 		self.rotate_y(TURN_SPEED * delta)
 	if Input.is_action_pressed("turn_right"):
 		self.rotate_y(-TURN_SPEED * delta)
-	if Input.is_action_just_pressed("restart"):
-		get_tree().reload_current_scene()
 	if Input.is_action_pressed("attack") and not hand.is_drawing:
 		hand.draw()
 	elif not Input.is_action_pressed("attack") and hand.is_drawing:
@@ -64,7 +64,7 @@ func process_movement(delta):
 	hvel.y = 0
 
 	var target = dir
-	target *= MAX_SPEED
+	target *= stats.speed
 
 	var accel
 	if dir.dot(hvel) > 0:
@@ -79,15 +79,56 @@ func process_movement(delta):
 	vel = move_and_slide(vel, Vector3(0, 1, 0), 0.05, 4)
 	
 func process_animation():
-	anim_tree["parameters/idle_walk/blend_amount"] = vel.length() / MAX_SPEED
+	anim_tree["parameters/idle_walk/blend_amount"] = vel.length() / stats.speed
 	anim_tree["parameters/move_shoot/blend_amount"] = (hand.percent_drawn * 4) * 0.01
 	
 func hit(damage):
-	stats.HP -= damage
+	stats.health -= damage
 	camera.shake(0.2)
-	if stats.HP <= 0:
+	if stats.health <= 0:
 		die()
 	
 		
 func die():
 	return
+	
+
+func save_data():
+	var save_data = {
+		"filename" : get_filename(),
+		"parent" : get_parent().get_path(),
+		"translation" : Utils.vec3_to_dict(translation),
+		"rotation" : Utils.vec3_to_dict(rotation_degrees),
+		"scale" : Utils.vec3_to_dict(scale),
+		"rotation_pivot" : Utils.vec3_to_dict(rotation_pivot.rotation_degrees),
+		"stats" : stats.save_data()
+	}
+	return save_data
+
+func load_data(data_dict):
+	translation = Utils.dict_to_vec3(data_dict["translation"])
+	rotation_degrees = Utils.dict_to_vec3(data_dict["rotation"])
+	scale = Utils.dict_to_vec3(data_dict["scale"])
+	rotation_pivot.rotation_degrees = Utils.dict_to_vec3(data_dict["rotation_pivot"])
+	stats.load_data(data_dict["stats"])
+
+
+func get_player_stats():
+	return stats.get_stats()
+	
+func get_bow_stats():
+	return $RotationPivot/Camera/Hand.get_wielding_weapon().get_stats()
+	
+func add_exp(experience):
+	stats.gain_experience(experience)
+	
+func get_stats_node():
+	return stats
+
+
+
+
+
+
+
+

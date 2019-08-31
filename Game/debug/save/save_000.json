@@ -1,0 +1,2 @@
+{"filename":"res://src/rooms/Forest_01.tscn","parent":"/root/Game/Room"}
+{"filename":"res://src/Player/Player.tscn","parent":"/root/Game/PlayerContainer","rotation":{"x":-0,"y":-83.556366,"z":0},"rotation_pivot":{"x":0,"y":0,"z":0},"scale":{"x":1.000004,"y":1,"z":1.000004},"stats":{"defense":0,"experience":10,"experience_required":28,"experience_total":40,"level":3,"level_points":2,"mana":3,"max_health":25,"max_mana":3,"path":"/root/Game/PlayerContainer/Player/Stats","speed":5},"translation":{"x":14.809213,"y":-0.000001,"z":-22.40416}}
